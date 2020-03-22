@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homer and donut</title>
+    <style>
+        body
+        {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: url('donut.png'), wait;
+        }
+
+        .homer
+        {
+            width: 400px;
+            height: 400px;
+            background: url(homer.jpg);
+        }
+
+        .eye
+        {
+            width: 50px;
+            height: 50px;
+            position: relative;
+            border-radius: 50%;
+            margin: 80px 0 0 177px;
+            display: inline-block;
+        }
+
+        .eye:nth-child(2)
+        {
+            margin: 0;
+            margin-left: -10px;
+        }
+
+        .apple-eye
+        {
+            width: 10px;
+            height: 10px;
+            background: #000000;
+            position: absolute;
+            border-radius: 50%;
+            left: 35px;
+            top: 20px;
+        }
+
+        .apple-eye:nth-child(2)
+        {
+            left: 260px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="homer">
+            <div class="eye"><div class="apple-eye"></div></div>
+            <div class="eye"><div class="apple-eye"></div></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        const xC = document.body.clientWidth/2,
+            yC = document.body.clientHeight/2;
+
+        console.log(xC, yC)
+
+        const getAngle = (x,y) => 
+        {
+            if(x>0) return Math.atan(y/x)/Math.PI*180;
+            else if(y<0) return (1.5*Math.PI-Math.atan(x/y))/Math.PI*180;
+            else return (0.5*Math.PI-Math.atan(x/y))/Math.PI*180;
+        }
+     
+        document.onmousemove = function(e)
+        {
+            let x = e.x,
+                y = e.y;
+
+            x -= xC;
+            y -= yC - 94;
+
+            let angle = getAngle(x,y);
+            console.log(angle)
+            document.querySelector(".eye").style.transform = `rotate(${angle}deg)`;
+            angle = getAngle(x-50,y);
+            document.querySelector(".eye:nth-child(2)").style.transform = `rotate(${angle}deg)`;
+        }  
+
+    </script>
+</body>
+</html>
